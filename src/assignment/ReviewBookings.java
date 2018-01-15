@@ -142,10 +142,11 @@ public class ReviewBookings extends javax.swing.JFrame {
         });
     }
     
-    /*Main method to setup Form, Shows form, Sets the correct title, and makes it so it only disposes this form instead of exiting program
+    /*Main method to setup Form, Shows form, Sets the correct title, and makes it so it only disposes this form instead of exiting program, Also set the form to open in the middle.
     TableNo, date, Name, Surname, Contact, Quantity, Comments are paremetes to display on the form
     */
     public void openFrame(int TableNo, GregorianCalendar date, String Name, String Surname, String Contact, int Quantity, String Comments){
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setTitle("Review Booking");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

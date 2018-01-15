@@ -262,7 +262,8 @@ public class Booking extends javax.swing.JFrame {
         this.TableNo = TableNo;
         this.date = date;
         
-        
+        //Set the form in the middle of the screen
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setTitle("Make a Booking");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
