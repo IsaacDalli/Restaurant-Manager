@@ -1,0 +1,8 @@
+1,John,Spiteri,99845124,10/05/2018,2
+2,Kate,Galea,79451245,10/05/2018,4,Highchair required
+1,Peter,Zahra,79845731,21/07/2018,3
+3,Alice,Carabott,99468791,10/05/2018,10
+4,James,Dingli,99364125,10/05/2018,15,Birthday
+2,Kim,Fenech,99871632,21/07/2018,4,Cake Ordered
+5,George,Pace,79541247,10/05/2018,2,Vegetarian Menu
+3,Jack,Vella,99451785,21/07/2018,2
