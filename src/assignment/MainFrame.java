@@ -1,7 +1,10 @@
 package assignment;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -21,9 +24,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        CBMonth = new javax.swing.JComboBox<>();
+        CBYear = new javax.swing.JComboBox<>();
+        CBDay = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -133,10 +136,10 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBDay, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBYear, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CBMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(jButton1)))
                 .addGap(10, 10, 10))
@@ -161,16 +164,16 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CBDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CBMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(CBYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -232,9 +235,24 @@ public class MainFrame extends javax.swing.JFrame {
     
     ArrayList<String> filteredBookings = new ArrayList<>();
     
+    GregorianCalendar lastBookingDate = new GregorianCalendar();
+    
     public void setup(){
         this.setVisible(true);
         this.setTitle("Restaurant Manager");
+        
+        String[] months = new DateFormatSymbols().getMonths();
+        DefaultComboBoxModel MnModel = new DefaultComboBoxModel(months);
+        CBMonth.setModel(MnModel);
+        CBMonth.removeItemAt(12);
+        
+        Calendar cal = new GregorianCalendar();
+        String[] years = {String.valueOf(cal.get(Calendar.YEAR)+1),String.valueOf(cal.get(Calendar.YEAR)+2)};
+        DefaultComboBoxModel YrModel = new DefaultComboBoxModel(years);
+        CBYear.setModel(YrModel);
+    }
+    
+    private void updateDays(int year, int month){
         
     }
     
@@ -252,13 +270,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton BtnTable3;
     private javax.swing.JButton BtnTable4;
     private javax.swing.JButton BtnTable5;
+    private javax.swing.JComboBox<String> CBDay;
+    private javax.swing.JComboBox<String> CBMonth;
+    private javax.swing.JComboBox<String> CBYear;
     private javax.swing.JMenuItem JMAbout;
     private javax.swing.JMenuItem JMExit;
     private javax.swing.JMenuItem JMRefresh;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
