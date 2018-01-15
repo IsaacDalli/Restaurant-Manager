@@ -211,56 +211,62 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Table 1 button runs open Table method
     private void BtnTable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTable1ActionPerformed
         openTable(1);
     }//GEN-LAST:event_BtnTable1ActionPerformed
-
+    //Table 2 button runs open Table method
     private void BtnTable2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTable2ActionPerformed
         openTable(2);
     }//GEN-LAST:event_BtnTable2ActionPerformed
-
+    //Table 3 button runs open Table method
     private void BtnTable3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTable3ActionPerformed
         openTable(3);
     }//GEN-LAST:event_BtnTable3ActionPerformed
-
+    //Table 4 button runs open Table method
     private void BtnTable4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTable4ActionPerformed
         openTable(4);
     }//GEN-LAST:event_BtnTable4ActionPerformed
-
+    //Table 5 button runs open Table method
     private void BtnTable5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTable5ActionPerformed
         openTable(5);
     }//GEN-LAST:event_BtnTable5ActionPerformed
-
+    //File>Exit from menu button, Askes user to confirm exit
     private void JMExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMExitActionPerformed
         int exit = JOptionPane.showConfirmDialog(null, "Exit Program?", "Exit",JOptionPane.YES_NO_OPTION);
+        //If user presses yes again the program exits
         if (exit == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_JMExitActionPerformed
-
+    
+    //File>Refresh Bookings menu button, Refreshes the whole program by running setup method
     private void JMRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMRefreshActionPerformed
         setup();
     }//GEN-LAST:event_JMRefreshActionPerformed
-
+    
+    //Help>About menu button, opens the JFrame About to display the user what the program is about
     private void JMAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMAboutActionPerformed
         AboutFrame af = new AboutFrame();
         af.openFrame();
     }//GEN-LAST:event_JMAboutActionPerformed
-
+    //When the Month combobox is updates it updates the day combo box depending on the new month and year
     private void CBMonthItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBMonthItemStateChanged
         updateDays(Integer.parseInt(CBYear.getSelectedItem().toString()),CBMonth.getSelectedIndex());
     }//GEN-LAST:event_CBMonthItemStateChanged
-
+    //When the Year combobox is updates it updates the day combo box depending on the new month and year
     private void CBYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CBYearItemStateChanged
         updateDays(Integer.parseInt(CBYear.getSelectedItem().toString()),CBMonth.getSelectedIndex());
     }//GEN-LAST:event_CBYearItemStateChanged
-
+    //When the Get Booking buttons is clicked, it updates the icons with the new date.
     private void BtnBookingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBookingsActionPerformed
         filterBookings(Integer.parseInt(CBYear.getSelectedItem().toString()), CBMonth.getSelectedIndex(), CBDay.getSelectedIndex()+1);
     }//GEN-LAST:event_BtnBookingsActionPerformed
+    //Main method
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            //Creates new instance of class and run the main method to setup form
             public void run() {
                 MainFrame mf = new MainFrame();
                 mf.setup();
@@ -268,7 +274,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
     
-    //Attributes
+    //Attributes needed to store bookings
     ArrayList<Integer> tableNumbers = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> surnames = new ArrayList<>();
@@ -277,18 +283,23 @@ public class MainFrame extends javax.swing.JFrame {
     ArrayList<Integer> quantities = new ArrayList<>();
     ArrayList<String> comments = new ArrayList<>();
     
+    //ArrayLists to store filtered bookings with the dates the user chose
     ArrayList<Integer> filteredBookings = new ArrayList<>();
     ArrayList<Integer> filteredTables = new ArrayList<>();
-    
+    //Date of when the user clicks on getBooking button
     GregorianCalendar lastBookingDate = new GregorianCalendar();
     
+    //Stores the table buttons in arraylist for easier update of icons
     ArrayList<JButton> buttons = new ArrayList<>();
     
+    //Main method to setup the whole program and form
     public void setup(){
+        //Sets the form to the center of screen, Sets the correct Title and makes the form visible
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setTitle("Restaurant Manager");
         
+        //Clears Booking ArrayLists so they dont keep doubles when users clicks resresh bookings
         tableNumbers.clear();
         names.clear();
         surnames.clear();
@@ -297,6 +308,7 @@ public class MainFrame extends javax.swing.JFrame {
         quantities.clear();
         comments.clear();
         
+        //Add buttons to ArrayList to update icons easy
         buttons.clear();
         buttons.add(BtnTable1);
         buttons.add(BtnTable2);
@@ -304,41 +316,51 @@ public class MainFrame extends javax.swing.JFrame {
         buttons.add(BtnTable4);
         buttons.add(BtnTable5);
         
-        String[] months = new DateFormatSymbols().getMonths();
-        DefaultComboBoxModel MnModel = new DefaultComboBoxModel(months);
-        CBMonth.setModel(MnModel);
-        CBMonth.removeItemAt(12);
+        //Set the months comboBox with the months
+        String[] months = new DateFormatSymbols().getMonths();//Get all months and store them inside list
+        DefaultComboBoxModel MnModel = new DefaultComboBoxModel(months);//Create a new model for combobox with months
+        CBMonth.setModel(MnModel);//Set the model to the comboBox
+        CBMonth.removeItemAt(12);//Remove empty space
         
+        //Update Year ComboBox with the 2 upcoming years
         Calendar cal = new GregorianCalendar();
         String[] years = {String.valueOf(cal.get(Calendar.YEAR)+1),String.valueOf(cal.get(Calendar.YEAR)+2)};
         DefaultComboBoxModel YrModel = new DefaultComboBoxModel(years);
         CBYear.setModel(YrModel);
         
+        //Method to update the days combobox depending on the year and month chosen
         updateDays(Integer.valueOf(years[0]), 0);
         
+        //Method to load bookings from file to arrayLists
         loadBookings();
         
+        //method to get the bookings that the dates are chosen on
         filterBookings(Integer.parseInt(years[0]), 0, 1);
     }
     
+    //Updates day combo box.
     private void updateDays(int year, int month){
-        CBDay.removeAllItems();
+        CBDay.removeAllItems();//Clears combo box
         Calendar cal = Calendar.getInstance();
-        cal.set(year, month, 1);
+        cal.set(year, month, 1);//Set the calendar to the chosen year and month
         for (int i = 1; i <= cal.getActualMaximum(Calendar.DAY_OF_MONTH); i++){
+            //Gets the maximum days in the current month and add from 1- maximum days to combobox
             CBDay.addItem(i+"");
         }
     }
     
+    //Gets bookings from file and fills arrayLists
     private void loadBookings(){
-        String contents = FileIO.readTextFile("src/Bookings.txt");
-        String[] consplit = contents.split("\n");
+        String contents = FileIO.readTextFile("src/Bookings.txt");//Contents from the File
+        String[] consplit = contents.split("\n");//Splits the contents into lines
         for (String line : consplit){
-            String[] i = line.split(",");
+            String[] i = line.split(",");//Splits each linbe where there is a comma
+            //Add items to arrayLists
             tableNumbers.add(Integer.parseInt(i[0]));
             names.add(i[1]);
             surnames.add(i[2]);
             contacts.add(i[3]);
+            //Get the date from string and store it inside a gregorian calendar
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
             Date date;
             GregorianCalendar c = new GregorianCalendar();
@@ -350,6 +372,7 @@ public class MainFrame extends javax.swing.JFrame {
             c.setTime(date);
             dates.add(c);
             quantities.add(Integer.parseInt(i[5]));
+            //Checks if booking has a comment, If it does add the comment if it doesnt add empty string
             if (i.length >= 7){
                 comments.add(i[6]);
             }else{
@@ -358,11 +381,15 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
     
+    //Method to filter bookings to the current chosen date
     private void filterBookings(int year, int month, int day){
+        //Sets the date of lastBookingDate to the paremeters gotten
         lastBookingDate.set(year, month, day);
+        //Clears ArrayLists
         filteredBookings.clear();
         filteredTables.clear();
         int i = 0;
+        //Goes trough each date and checks if it mathes to the date given, If it does add it to ArrayLists and add the Table number to filteredTables
         for (GregorianCalendar c : dates){
             if (c.get(Calendar.YEAR)==lastBookingDate.get(Calendar.YEAR) && c.get(Calendar.DAY_OF_YEAR) == lastBookingDate.get(Calendar.DAY_OF_YEAR)){
                 filteredBookings.add(i);
@@ -370,13 +397,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
             i++;
         }
+        //Runs method to update icons with the chosen date
         updateIcons();
     }
     
+    //Updates icons depending on the chosen date
     private void updateIcons(){
-        int i = 0;
-        int av = 0;
-        int seats = 0;
+        int i = 0;//Current table
+        int av = 0;//Available tables
+        int seats = 0;//Seats taken
+        //Go trough every table button and check if its booked or not, If it is Set the icon to red else, set the table icon green and add 1 to available tables
         for (JButton btn : buttons){
             i++;
             if (filteredTables.contains(i)){
@@ -386,25 +416,31 @@ public class MainFrame extends javax.swing.JFrame {
                 btn.setIcon(new ImageIcon("src/assignment/Images/table"+i+"_available.png")); 
             }
         }
-        
+        //Go trough every Booking on the date and add the seats booked to display on the text
         for (int l : filteredBookings){
             seats+=quantities.get(l);
         }
+        //Displays tables available and seats taken
         TxtTables.setText(av+" tables availble on chosen date. "+seats+" seats are already taken.");
     }
     
+    //Method runs when table buttons are clicked, Takes table number as parameter
     private void openTable(int table){
+        //Checks if table is booked
         if (filteredTables.contains(table)){
             ReviewBookings rb = new ReviewBookings();
             int num = 0;
+            //If it table is booked, Get the index for other arrayLists to get information about booking.
             for (int i : filteredBookings){
                 if (tableNumbers.get(i).equals(table)){
                     num = i;
                     break;
                 }
             }
+            //Calls method to open Review Booking with information about booking.
             rb.openFrame(table, lastBookingDate, names.get(num), surnames.get(num), contacts.get(num), quantities.get(num), comments.get(num));
         }else{
+            //If the table is available Open Booking Form for the user to book.
             Booking b = new Booking();
             b.openFrame(table, lastBookingDate);
         }
